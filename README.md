@@ -18,3 +18,4 @@ Flatpak playground
 * Used [Flatpak PIP Generator](https://github.com/flatpak/flatpak-builder-tools/tree/master/pip) to generate module for fdroidserver (`python3 flatpak-pip-generator fdroidserver`)
 * It wasn't installing without babel and cffi, so added them as modules as well
 * Added placeholder for where env vars will be, added the network permission
+* Added [openjdk runtime extension](https://github.com/flathub/org.freedesktop.Sdk.Extension.openjdk9), but we need truly an sdk https://github.com/flathub/org.freedesktop.Sdk.Extension.openjdk9/issues/3
