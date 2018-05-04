@@ -4,12 +4,31 @@
 	"runtime": "org.freedesktop.Platform",
 	"sdk": "org.freedesktop.Sdk",
 	"runtime-version": "1.6",
+	"sdk-extensions": [
+		"org.freedesktop.Sdk.Extension.openjdk9"
+	],
+	"platform-extensions": [
+		"org.freedesktop.Sdk.Extension.openjdk9"
+	],
 	"separate-locales": false,
 	"finish-args": [
 		"--share=network",
+		"--env=PATH=/app/bin:/usr/bin:/app/jre/bin",
 		"--env=ANDROID_HOME=/var/data/android-sdk"
 	],
+	"build-options": {
+		"env": {
+			"PATH": "/app/bin:/usr/bin:/usr/lib/sdk/openjdk9/bin"
+		}
+	},
 	"modules": [
+		{
+			"name": "openjdk",
+			"buildsystem": "simple",
+			"build-commands": [
+				"/usr/lib/sdk/openjdk9/install.sh"
+			]
+		},
 		{
 			"name": "babel",
 			"buildsystem": "simple",
