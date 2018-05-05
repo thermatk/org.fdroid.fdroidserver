@@ -19,3 +19,4 @@ Flatpak playground
 * It wasn't installing without babel and cffi, so added them as modules as well
 * Added placeholder for where env vars will be, added the network permission
 * Added [openjdk runtime extension](https://github.com/flathub/org.freedesktop.Sdk.Extension.openjdk9), but we need truly an sdk https://github.com/flathub/org.freedesktop.Sdk.Extension.openjdk9/issues/3
+* Added full jdk, also PR to upstream: https://github.com/flathub/org.freedesktop.Sdk.Extension.openjdk9/pull/7
