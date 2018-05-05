@@ -1,19 +1,16 @@
 {
 	"id": "org.fdroid.fdroidserver",
 	"command": "fdroid",
-	"runtime": "org.freedesktop.Platform",
+	"runtime": "org.freedesktop.Sdk",
 	"sdk": "org.freedesktop.Sdk",
 	"runtime-version": "1.6",
 	"sdk-extensions": [
 		"org.freedesktop.Sdk.Extension.openjdk9"
 	],
-	"platform-extensions": [
-		"org.freedesktop.Sdk.Extension.openjdk9"
-	],
 	"separate-locales": false,
 	"finish-args": [
 		"--share=network",
-		"--env=PATH=/app/bin:/usr/bin:/app/jre/bin",
+		"--env=PATH=/app/bin:/usr/bin:/app/jre/bin:/app/jdk/bin",
 		"--env=ANDROID_HOME=/var/data/android-sdk"
 	],
 	"build-options": {
@@ -26,7 +23,10 @@
 			"name": "openjdk",
 			"buildsystem": "simple",
 			"build-commands": [
-				"/usr/lib/sdk/openjdk9/install.sh"
+				"/usr/lib/sdk/openjdk9/install.sh",
+				"mkdir -p /app/jdk/bin",
+				"cp -ra /usr/lib/sdk/openjdk9/jvm/openjdk-9/bin /app/jdk/",
+				"rm /app/jdk/bin/java"
 			]
 		},
 		{
