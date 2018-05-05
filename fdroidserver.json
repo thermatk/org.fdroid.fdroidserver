@@ -10,7 +10,7 @@
 	"separate-locales": false,
 	"finish-args": [
 		"--share=network",
-		"--env=PATH=/app/bin:/usr/bin:/app/jre/bin:/app/jdk/bin",
+		"--env=PATH=/app/bin:/usr/bin:/app/jdk/bin",
 		"--env=ANDROID_HOME=/var/data/android-sdk"
 	],
 	"build-options": {
@@ -23,10 +23,11 @@
 			"name": "openjdk",
 			"buildsystem": "simple",
 			"build-commands": [
-				"/usr/lib/sdk/openjdk9/install.sh",
 				"mkdir -p /app/jdk/",
 				"cp -ra /usr/lib/sdk/openjdk9/jvm/openjdk-9/bin /app/jdk/",
-				"rm /app/jdk/bin/java"
+				"cp -ra /usr/lib/sdk/openjdk9/jvm/openjdk-9/conf /app/jdk/",
+				"cp -ra /usr/lib/sdk/openjdk9/jvm/openjdk-9/lib /app/jdk/",
+				"rm /app/jdk/lib/src.zip"
 			]
 		},
 		{
