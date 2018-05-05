@@ -24,7 +24,7 @@
 			"buildsystem": "simple",
 			"build-commands": [
 				"/usr/lib/sdk/openjdk9/install.sh",
-				"mkdir -p /app/jdk/bin",
+				"mkdir -p /app/jdk/",
 				"cp -ra /usr/lib/sdk/openjdk9/jvm/openjdk-9/bin /app/jdk/",
 				"rm /app/jdk/bin/java"
 			]
