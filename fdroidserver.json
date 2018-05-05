@@ -10,6 +10,8 @@
 	"separate-locales": false,
 	"finish-args": [
 		"--share=network",
+		"--allow=multiarch",
+		"--allow=devel",
 		"--env=PATH=/app/bin:/usr/bin:/app/jdk/bin",
 		"--env=ANDROID_HOME=/var/data/android-sdk"
 	],
