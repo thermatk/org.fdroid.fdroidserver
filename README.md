@@ -8,6 +8,7 @@ Flatpak playground
     * Add Flathub repo `flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo`
     * restart
     * install the freedesktop runtime `flatpak install flathub org.freedesktop.Platform//1.6 org.freedesktop.Sdk//1.6`
+    * install jdk extension `flatpak install flathub org.freedesktop.Sdk.Extension.openjdk9`
 1. Copy json to some empty place
 2. `flatpak-builder --install fdroidserver fdroidserver.json`
 3. Flatpak is built and installed now, play with it `flatpak run org.fdroid.fdroidserver`
