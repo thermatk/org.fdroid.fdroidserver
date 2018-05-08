@@ -1,0 +1,331 @@
+{
+	"id": "org.fdroid.vagrant",
+	"command": "vagrant",
+	"runtime": "org.freedesktop.Sdk",
+	"sdk": "org.freedesktop.Sdk",
+	"runtime-version": "1.6",
+	"sdk-extensions": [
+		"org.freedesktop.Sdk.Extension.golang"
+	],
+	"separate-locales": false,
+	"finish-args": [
+		"--share=network",
+		"--allow=multiarch",
+		"--allow=devel"
+	],
+	"modules": [
+		{
+			"name": "qemu",
+			"config-opts": [ "--target-list=x86_64-softmmu,i386-softmmu" ],
+			"sources": [
+				{
+					"type" : "archive",
+					"url" : "https://download.qemu.org/qemu-2.12.0.tar.bz2",
+					"sha256" : "c9f4a147bc915d24df9784affc611a115f42d24720a89210b479f1ba7a3f679c"
+				}
+			]
+		},
+		{
+			"name": "libnl",
+			"sources": [
+				{
+					"type" : "archive",
+					"url" : "https://github.com/thom311/libnl/releases/download/libnl3_4_0/libnl-3.4.0.tar.gz",
+					"md5" : "8f71910c03db363b41e2ea62057a4311"
+				}
+			]
+		},
+		{
+			"name": "device-mapper",
+			"post-install": [
+				"chmod 755 /app/lib/libdevmapper.so.1.02",
+				"chmod -R 755 /app/sbin/"
+			],
+			"sources": [
+				{
+					"type" : "archive",
+					"url" : "https://mirrors.kernel.org/sourceware/lvm2/releases/LVM2.2.02.177.tgz",
+					"sha256" : "4025a23ec9b15c2cb7486d151c29dc953b75efc4d452cfe9dbbc7c0fac8e80f2"
+				}
+			]
+		},
+		{
+			"name": "yajl",
+			"buildsystem": "cmake",
+			"sources": [
+				{
+					"type" : "archive",
+					"url" : "https://github.com/lloyd/yajl/archive/2.1.0.tar.gz",
+					"md5" : "6887e0ed7479d2549761a4d284d3ecb0"
+				}
+			]
+		},
+		{
+			"name": "libvirt",
+			"sources": [
+				{
+					"type" : "archive",
+					"url" : "https://libvirt.org/sources/libvirt-4.3.0.tar.xz",
+					"sha256" : "a531e22c8b985ecb2d1223b913fd6ec0f1800e3ebe02351924274885db20c2b7"
+				}
+			]
+		},
+		{
+			"name": "vagrant-2.0.4",
+			"buildsystem": "simple",
+			"build-options": {
+				"env": {
+					"GOROOT":"/usr/lib/sdk/golang",
+					"PATH": "/app/bin:/usr/bin:/usr/lib/sdk/golang/bin",
+					"GOPATH": "/app/go",
+					"CPATH": "/usr/include/",
+					"CC": "/usr/bin/gcc",
+					"CXX": "/usr/bin/g++"
+				}
+			},
+			"build-commands": [
+				"mkdir -p /app/go/src/",
+				"mv github.com/ /app/go/src/",
+				"go install github.com/mitchellh/osext",
+				"cd installers/substrate/modules/vagrant_substrate/files/launcher; go build -o vagrant",
+				"gem build vagrant.gemspec",
+				"mkdir -p /app/bin",
+				"mkdir -p /app/vagrant/bin",
+				"mkdir -p /app/vagrant/embedded",
+				"cp -ra installers/substrate/modules/vagrant_substrate/files/launcher/vagrant /app/vagrant/bin",
+				"ln -s /app/vagrant/bin/vagrant /app/bin/vagrant",
+				"install -Dm644 installers/substrate/modules/vagrant_substrate/templates/gemrc.erb /app/vagrant/embedded/etc/gemrc",
+				"cp -r installers/substrate/modules/rubyencoder/files/rgloader /app/vagrant/embedded",
+				"gem unpack unf_ext-0.0.7.5.gem; rm unf_ext-0.0.7.5.gem",
+				"echo \"RbConfig::MAKEFILE_CONFIG['CC'] = ENV['CC'] if ENV['CC']\" >> unf_ext-0.0.7.5/ext/unf_ext/extconf.rb",
+				"echo \"RbConfig::MAKEFILE_CONFIG['CXX'] = ENV['CC'] if ENV['CXX']\" >> unf_ext-0.0.7.5/ext/unf_ext/extconf.rb",
+				"sed -i -e '/create_makefile/d' unf_ext-0.0.7.5/ext/unf_ext/extconf.rb",
+				"echo \"create_makefile 'unf_ext'\" >> unf_ext-0.0.7.5/ext/unf_ext/extconf.rb",
+				"cd unf_ext-0.0.7.5; gem build unf_ext.gemspec; cp unf_ext-0.0.7.5.gem ../",
+				"GEM_PATH=/app/vagrant/embedded/gems GEM_HOME=/app/vagrant/embedded/gems GEMRC=/app/vagrant/embedded/etc/gemrc gem install -l unf_ext-0.0.7.5.gem --no-ri --no-rdoc",
+				"GEM_PATH=/app/vagrant/embedded/gems GEM_HOME=/app/vagrant/embedded/gems GEMRC=/app/vagrant/embedded/etc/gemrc gem install -l vagrant-2.0.4.gem --no-ri --no-rdoc",
+				"mkdir -p /app/vagrant/embedded/bin/",
+				"ln -s /usr/bin/ruby /app/vagrant/embedded/bin/ruby"
+			],
+			"sources": [
+				{
+					"type": "git",
+					"dest": "github.com/mitchellh/osext",
+					"url": "git://github.com/mitchellh/osext.git",
+					"branch": "master"
+				},
+				{
+					"type": "git",
+					"dest": "installers",
+					"url": "git://github.com/mitchellh/vagrant-installers.git",
+					"commit": "7b7fb86"
+				},
+				{
+					"type": "archive",
+					"url": "https://github.com/mitchellh/vagrant/archive/v2.0.4.tar.gz",
+					"md5": "dd72d6eee15aa5592cc37c1b0daf208b"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/childprocess-0.6.0.gem",
+					"sha256": "e4882a17ec92f5271ac5ae8c8937fca983258b67b385e339de974f40bb76433f"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/erubis-2.7.0.gem",
+					"sha256": "63653f5174a7997f6f1d6f465fbe1494dcc4bdab1fb8e635f6216989fb1148ba"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/i18n-0.8.0.gem",
+					"sha256": "eefbf6cbe4432e41e6ad69bd2a1f6df1130f65bf6ad036c8344b25840fa5da02"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/listen-3.1.5.gem",
+					"sha256": "bd9ab5f1615a7e491a2251c09f0fae9407ab3bd7650bdb517dda54ec6cae6507"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/hashicorp-checkpoint-0.1.5.gem",
+					"sha256": "4daf74afd63c1701a6c817d87e4fc58f595037ccbc1d302bc45cdcd3f6e7d5fc"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/log4r-1.1.10.gem",
+					"sha256": "9b452928c964b7c54c09aeb25ff045b5a722b387b16c9ce37cb1baec00062966"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/net-ssh-4.2.0.gem",
+					"sha256": "1dda1318904d8ed2c8e18b041cbe29746e6ff45ff4a798eb52aa05fa4fda841d"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/net-sftp-2.1.0.gem",
+					"sha256": "d18f0f644071370eb468ea67583ab2d3d9977c2588d6a2fab55983b198ae5edb"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/net-scp-1.2.0.gem",
+					"sha256": "942d38c55686a0fb69ee80d7d006ffffcf22d684146f4f07616cb15dd326377a"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/rb-kqueue-0.2.0.gem",
+					"sha256": "c30ee45a9095f86bc7e213fe3b2cfff56f78a08f47fae584ff418d84618d5cb8"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/rest-client-2.0.2.gem",
+					"sha256": "1295e486591f8ef7786451e28d24f8aa0a04cc47767cd1859b729575b2d0ecc3"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/wdm-0.1.1.gem",
+					"sha256": "28406f5f236796019bea5b2a85e37cbcd229ec928c8b68261947a44eec15b474"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/win32-file-0.8.1.gem",
+					"sha256": "a0ab2e94bf8631111b9ed54286b616b917cde04bcdc2e3b0f4ddae45f6a75e56"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/win32-file-security-1.0.10.gem",
+					"sha256": "39e528fc28e8f11e5132db1c6fc93bc7c22f232783953841ad3dc3a08240f852"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/winrm-2.1.0.gem",
+					"sha256": "69148dc99e9457506c6823f36641c353abfba4539d170c3ddc8be70659cf7afa"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/winrm-fs-1.0.0.gem",
+					"sha256": "cce52f2c686298da58762b0559774c52e569279aa209eeb8a27b9324c990265d"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/winrm-elevated-1.1.0.gem",
+					"sha256": "9971bd50f0374c07db4dc5ad9af6b86c397167f1c20e2e88978733222d5f7912"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/ruby_dep-1.3.1.gem",
+					"sha256": "14814183f004eba3e3db9c9b534b65208294412ab99aa337e934a5f4bbfd186c"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/rubyzip-1.1.0.gem",
+					"sha256": "947dffad17c1dce5ec14793909e6c570960c07dde6d6083e1565b9438066b74f"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/logging-2.2.2.gem",
+					"sha256": "963359dbdab725a3320eab179017d20d5b9731d7148e1efa8432c184a48a461a"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/builder-3.2.3.gem",
+					"sha256": "21f3026ba615d87488329aff4aa4c10464563de3c648f678d8edd26374892b62"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/gyoku-1.0.0.gem",
+					"sha256": "2d262222e79a5b75fd1cc7e9cdf23b1dc1b676db6b8196e1798cde058a0e2529"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/nori-2.0.0.gem",
+					"sha256": "a40d0233645884c83271a0fbf17aec3bd7b8b7c6dd28c85960e7244454347bfa"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/rubyntlm-0.6.2.gem",
+					"sha256": "be81d7cbe7042c3a582299d89f0b07ef142b9854d260b648b498ad49a7eecbdc"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/httpclient-2.8.3.gem",
+					"sha256": "2951e4991214464c3e92107e46438527d23048e634f3aee91c719e0bdfaebda6"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/gssapi-1.2.0.gem",
+					"sha256": "3d0e3222f36532c1ab3b7eaab171ad4245889edc5439a5483ff714999cb62349"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/ffi-win32-extensions-1.0.3.gem",
+					"sha256": "f474a976492ea6c566ab5609239e44a466ceb1ce1e6529745422de35f29a93fb"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/ffi-1.9.23.gem",
+					"sha256": "f993798158e205925aa1b80024f2dae1ce0f043fb0d0c39a531cc9bafdba867f"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/win32-file-stat-1.5.5.gem",
+					"sha256": "c890b9eda616c4465da13d0ebd9bef11988946b22ae224f752bda3c5a4f28351"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/netrc-0.8.0.gem",
+					"sha256": "6bb6b2011b1f069600cc10f9a968f6dcb3cac9c23e741c3b1978a6d0765b92c8"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/mime-types-3.1.gem",
+					"sha256": "75949321c3f55e6618d0596016059841c26168342ec1ee4e641053bb66fa0701"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/http-cookie-1.0.3.gem",
+					"sha256": "2f11269d817bc52ab2af2721e89a377660a961078de2a3a55fc696d7897e8c00"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/rb-inotify-0.9.10.gem",
+					"sha256": "e140f7ad14cd91e001c7e0bfa32458dd29995e70932765fcf477de630b7fda79"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/rb-fsevent-0.10.3.gem",
+					"sha256": "a8f78186feb55bb98579b5e0f8dd925ececfde1b5c2496e5e932997ff999a1d2"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/multi_json-1.10.0.gem",
+					"sha256": "3c9f8c1696727d01e7cc18764e6e78c19cfcbebf314628889815bcd48934d7fe"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/little-plugger-1.1.0.gem",
+					"sha256": "87185784b4d9bb5dd2914214740622d1058325fcf6ece6c05a6d03d15f756995"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/mime-types-data-3.2016.0521.gem",
+					"sha256": "7542bccff06d70c4ad94d1cf10b7dac6bd89958356e5d0d7f6447168c819be12"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/domain_name-0.5.20180417.gem",
+					"sha256": "7b74d1fe58937c6021d210d123a8e880787a047dbc411cabd6475b6216a76d29"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/unf-0.1.4.gem",
+					"sha256": "4999517a531f2a955750f8831941891f6158498ec9b6cb1c81ce89388e63022e"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/unf_ext-0.0.7.5.gem",
+					"sha256": "4126717c9ad85bc0d8f62881cabf32e84fe18c47485784d1ba8b0c0fb189e11a"
+				}
+			]
+		}
+	]
+}
