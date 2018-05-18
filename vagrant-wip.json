@@ -122,8 +122,8 @@
 				},
 				{
 					"type": "archive",
-					"url": "https://github.com/mitchellh/vagrant/archive/v2.0.4.tar.gz",
-					"md5": "dd72d6eee15aa5592cc37c1b0daf208b"
+					"url": "https://github.com/mitchellh/vagrant/archive/v2.1.1.tar.gz",
+					"md5": "eeab863af4541c3a627aa1c6193a574a"
 				},
 				{
 					"type": "file",
