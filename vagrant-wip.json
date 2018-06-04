@@ -71,7 +71,7 @@
 			]
 		},
 		{
-			"name": "vagrant-2.0.4",
+			"name": "vagrant",
 			"buildsystem": "simple",
 			"build-options": {
 				"env": {
@@ -103,7 +103,7 @@
 				"echo \"create_makefile 'unf_ext'\" >> unf_ext-0.0.7.5/ext/unf_ext/extconf.rb",
 				"cd unf_ext-0.0.7.5; gem build unf_ext.gemspec; cp unf_ext-0.0.7.5.gem ../",
 				"GEM_PATH=/app/vagrant/embedded/gems GEM_HOME=/app/vagrant/embedded/gems GEMRC=/app/vagrant/embedded/etc/gemrc gem install -l unf_ext-0.0.7.5.gem --no-ri --no-rdoc",
-				"GEM_PATH=/app/vagrant/embedded/gems GEM_HOME=/app/vagrant/embedded/gems GEMRC=/app/vagrant/embedded/etc/gemrc gem install -l vagrant-2.0.4.gem --no-ri --no-rdoc",
+				"GEM_PATH=/app/vagrant/embedded/gems GEM_HOME=/app/vagrant/embedded/gems GEMRC=/app/vagrant/embedded/etc/gemrc gem install -l vagrant-2.1.1.gem --no-ri --no-rdoc",
 				"mkdir -p /app/vagrant/embedded/bin/",
 				"ln -s /usr/bin/ruby /app/vagrant/embedded/bin/ruby"
 			],
@@ -324,6 +324,75 @@
 					"type": "file",
 					"url": "https://rubygems.org/downloads/unf_ext-0.0.7.5.gem",
 					"sha256": "4126717c9ad85bc0d8f62881cabf32e84fe18c47485784d1ba8b0c0fb189e11a"
+				}
+			]
+		},
+		{
+			"name": "vagrant-libvirt",
+			"buildsystem": "simple",
+			"build-options": {
+				"env": {
+					"CPATH": "/usr/include/",
+					"CC": "/usr/bin/gcc",
+					"CXX": "/usr/bin/g++"
+				}
+			},
+			"build-commands": [
+				"EMBEDDED_DIR=/app/vagrant/embedded GEM_PATH=/app/vagrant/embedded/gems GEM_HOME=/app/vagrant/embedded/gems GEMRC=/app/vagrant/embedded/etc/gemrc gem build vagrant-libvirt.gemspec",
+				"EMBEDDED_DIR=/app/vagrant/embedded GEM_PATH=/app/vagrant/embedded/gems GEM_HOME=/app/vagrant/embedded/gems GEMRC=/app/vagrant/embedded/etc/gemrc gem install -l fog-core-1.43.0.gem --no-ri --no-rdoc",
+				"EMBEDDED_DIR=/app/vagrant/embedded GEM_PATH=/app/vagrant/embedded/gems GEM_HOME=/app/vagrant/embedded/gems GEMRC=/app/vagrant/embedded/etc/gemrc gem install -l fog-libvirt-0.4.2.gem --no-ri --no-rdoc",
+				"EMBEDDED_DIR=/app/vagrant/embedded GEM_PATH=/app/vagrant/embedded/gems GEM_HOME=/app/vagrant/embedded/gems GEMRC=/app/vagrant/embedded/etc/gemrc gem install -l ruby-libvirt-0.7.0.gem --no-ri --no-rdoc",
+				"EMBEDDED_DIR=/app/vagrant/embedded GEM_PATH=/app/vagrant/embedded/gems GEM_HOME=/app/vagrant/embedded/gems GEMRC=/app/vagrant/embedded/etc/gemrc gem install -l vagrant-libvirt-0.0.43.gem --no-ri --no-rdoc"			],
+			"sources": [
+				{
+					"type": "git",
+					"url": "git://github.com/vagrant-libvirt/vagrant-libvirt.git",
+					"tag": "0.0.43"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/ruby-libvirt-0.7.0.gem",
+					"sha256": "61f1261500dd18ea42452a7a69dce8606057e9c1143d1224201d8c29db0bc703"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/fog-core-1.43.0.gem",
+					"sha256": "866b816e7516d6787bc074fcec8bb530ebf196685fee03cf56a69ecd852e8229"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/fog-libvirt-0.4.2.gem",
+					"sha256": "b08b05742188c7c89062fbf3874c37355ea71562fd9d3028a2279e9d2d227736"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/formatador-0.2.5.gem",
+					"sha256": "80821869ddacb79e72870ff4bb1531efacd278c04f2df26bc6b4529ee13582bd"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/excon-0.62.0.gem",
+					"sha256": "624dfbd6659dfdbefd213019d94598c4d47a713936819b6bb729303412e08996"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/fog-xml-0.1.3.gem",
+					"sha256": "5604c42649ebb0d8a31bd973aa000c2dd0127f1c1c4c174b69266a2e78e37410"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/fog-json-1.0.2.gem",
+					"sha256": "19006b42ac58cc71442e97d00de454824245b3780bb091cfa97e4a25db9cbb29"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/nokogiri-1.8.2.gem",
+					"sha256": "382af505a11b735e97f52ec6279ea484be7a7560d5599e81def40943601fd515"
+				},
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/mini_portile2-2.3.0.gem",
+					"sha256": "216417b241ff4e7b1c726f257241eaf223e3abbe6ec2c6453352dea6a414a38d"
 				}
 			]
 		}
