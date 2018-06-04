@@ -342,7 +342,7 @@
 				"EMBEDDED_DIR=/app/vagrant/embedded GEM_PATH=/app/vagrant/embedded/gems GEM_HOME=/app/vagrant/embedded/gems GEMRC=/app/vagrant/embedded/etc/gemrc gem install -l fog-core-1.43.0.gem --no-ri --no-rdoc",
 				"EMBEDDED_DIR=/app/vagrant/embedded GEM_PATH=/app/vagrant/embedded/gems GEM_HOME=/app/vagrant/embedded/gems GEMRC=/app/vagrant/embedded/etc/gemrc gem install -l fog-libvirt-0.4.2.gem --no-ri --no-rdoc",
 				"EMBEDDED_DIR=/app/vagrant/embedded GEM_PATH=/app/vagrant/embedded/gems GEM_HOME=/app/vagrant/embedded/gems GEMRC=/app/vagrant/embedded/etc/gemrc gem install -l ruby-libvirt-0.7.0.gem --no-ri --no-rdoc",
-				"EMBEDDED_DIR=/app/vagrant/embedded GEM_PATH=/app/vagrant/embedded/gems GEM_HOME=/app/vagrant/embedded/gems GEMRC=/app/vagrant/embedded/etc/gemrc vagrant plugin  install --plugin-clean-sources vagrant-libvirt-0.0.43.gem"
+				"EMBEDDED_DIR=/app/vagrant/embedded GEM_PATH=/app/vagrant/embedded/gems GEM_HOME=/app/vagrant/embedded/gems GEMRC=/app/vagrant/embedded/etc/gemrc vagrant plugin install --plugin-clean-sources vagrant-libvirt-0.0.43.gem"
 			],
 			"sources": [
 				{
@@ -401,7 +401,7 @@
 			"name": "vagrant-mutate",
 			"buildsystem": "simple",
 			"build-commands": [
-				"EMBEDDED_DIR=/app/vagrant/embedded GEM_PATH=/app/vagrant/embedded/gems GEM_HOME=/app/vagrant/embedded/gems GEMRC=/app/vagrant/embedded/etc/gemrc vagrant plugin  install --plugin-clean-sources vagrant-mutate-1.2.0.gem"
+				"EMBEDDED_DIR=/app/vagrant/embedded GEM_PATH=/app/vagrant/embedded/gems GEM_HOME=/app/vagrant/embedded/gems GEMRC=/app/vagrant/embedded/etc/gemrc vagrant plugin install --plugin-clean-sources vagrant-mutate-1.2.0.gem"
 			],
 			"sources": [
 				{
