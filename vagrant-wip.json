@@ -342,7 +342,8 @@
 				"EMBEDDED_DIR=/app/vagrant/embedded GEM_PATH=/app/vagrant/embedded/gems GEM_HOME=/app/vagrant/embedded/gems GEMRC=/app/vagrant/embedded/etc/gemrc gem install -l fog-core-1.43.0.gem --no-ri --no-rdoc",
 				"EMBEDDED_DIR=/app/vagrant/embedded GEM_PATH=/app/vagrant/embedded/gems GEM_HOME=/app/vagrant/embedded/gems GEMRC=/app/vagrant/embedded/etc/gemrc gem install -l fog-libvirt-0.4.2.gem --no-ri --no-rdoc",
 				"EMBEDDED_DIR=/app/vagrant/embedded GEM_PATH=/app/vagrant/embedded/gems GEM_HOME=/app/vagrant/embedded/gems GEMRC=/app/vagrant/embedded/etc/gemrc gem install -l ruby-libvirt-0.7.0.gem --no-ri --no-rdoc",
-				"EMBEDDED_DIR=/app/vagrant/embedded GEM_PATH=/app/vagrant/embedded/gems GEM_HOME=/app/vagrant/embedded/gems GEMRC=/app/vagrant/embedded/etc/gemrc gem install -l vagrant-libvirt-0.0.43.gem --no-ri --no-rdoc"			],
+				"EMBEDDED_DIR=/app/vagrant/embedded GEM_PATH=/app/vagrant/embedded/gems GEM_HOME=/app/vagrant/embedded/gems GEMRC=/app/vagrant/embedded/etc/gemrc vagrant plugin  install --plugin-clean-sources vagrant-libvirt-0.0.43.gem"
+			],
 			"sources": [
 				{
 					"type": "git",
@@ -393,6 +394,20 @@
 					"type": "file",
 					"url": "https://rubygems.org/downloads/mini_portile2-2.3.0.gem",
 					"sha256": "216417b241ff4e7b1c726f257241eaf223e3abbe6ec2c6453352dea6a414a38d"
+				}
+			]
+		},
+		{
+			"name": "vagrant-mutate",
+			"buildsystem": "simple",
+			"build-commands": [
+				"EMBEDDED_DIR=/app/vagrant/embedded GEM_PATH=/app/vagrant/embedded/gems GEM_HOME=/app/vagrant/embedded/gems GEMRC=/app/vagrant/embedded/etc/gemrc vagrant plugin  install --plugin-clean-sources vagrant-mutate-1.2.0.gem"
+			],
+			"sources": [
+				{
+					"type": "file",
+					"url": "https://rubygems.org/downloads/vagrant-mutate-1.2.0.gem",
+					"sha256": "5365124efe06199d353c4614afcb5855945cd63cfeb5d8138f1497a899df2400"
 				}
 			]
 		}
