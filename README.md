@@ -23,3 +23,9 @@ Flatpak playground
 * Added full jdk, also [PR to upstream](https://github.com/flathub/org.freedesktop.Sdk.Extension.openjdk9/pull/7)
 * As for 32-bit libs [required by fdroidserver](https://f-droid.org/en/docs/Installing_the_Server_and_Repo_Tools/), those are the same requirements as for [Android Studio](https://developer.android.com/studio/troubleshoot#linux_libraries). Yet while they are being [explicitly added in an older flatpak](https://github.com/endlessm/android-studio-flatpak/blob/master/com.google.AndroidStudio.json.in), in the [newest they aren't](https://github.com/flathub/com.google.AndroidStudio/blob/master/com.google.AndroidStudio.json). Let's assume it works, unless it breaks
 * Since Virtualbox requires kernel modules, let's skip it and go QEMU/KVM route? This should work, because the emulator in the aforementioned Android Studio flatpak works. [Also](https://github.com/flatpak/flatpak/commit/c9c35133c3a0041c7bf9269791a2caebfb04ddf0)
+* Vagrant in a separate flatpak for now, using [PKGBUILD from Arch as inspiration](https://git.archlinux.org/svntogit/community.git/tree/trunk/PKGBUILD?h=packages/vagrant)
+* All Ruby gems had to be added manually, until someone writes a generator
+* To compile native gems, need to add `CPATH=/usr/include`
+* Also, because of broken /usr/lib/ruby/2.2.0/x86_64-linux-gnu/rbconfig.rb shipped in the runtime, need to do some crazy patch inside a gem `RbConfig::MAKEFILE_CONFIG['CC'] = ENV['CC'] if ENV['CC']`
+* Added libvirt and its dependencies, simply as a lib. Fixed some errors like these https://github.com/flatpak/flatpak/issues/469
+* Added qemu. Chose targets according to https://wiki.qemu.org/Hosts/Linux, KVM seems to be on by default
