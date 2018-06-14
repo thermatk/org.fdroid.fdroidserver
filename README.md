@@ -28,4 +28,5 @@ Flatpak playground
 * To compile native gems, need to add `CPATH=/usr/include`
 * Also, because of broken /usr/lib/ruby/2.2.0/x86_64-linux-gnu/rbconfig.rb shipped in the runtime, need to do some crazy patch inside a gem `RbConfig::MAKEFILE_CONFIG['CC'] = ENV['CC'] if ENV['CC']`
 * Added libvirt and its dependencies, simply as a lib. Fixed some errors like these https://github.com/flatpak/flatpak/issues/469
-* Added qemu. Chose targets according to https://wiki.qemu.org/Hosts/Linux, KVM seems to be on by default
+* Added QEMU. Chose targets according to https://wiki.qemu.org/Hosts/Linux, KVM seems to be on by default
+* Added vagrant-libvirt and vagrant-mutate plugins. For some reason they don't get listed by Vagrant, but seem to work
